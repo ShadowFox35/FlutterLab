@@ -1,14 +1,14 @@
 class Solution {
   int lengthOfLIS(List<int> nums) {
-  List<int> dp = List.filled(nums.length, 1);
+  List<int> incrSeq = List.filled(nums.length, 1);
   for (int i = 1; i < nums.length; i++) {
     for (int j = 0; j < i; j++) {
-      if (nums[i] > nums[j] && dp[j] + 1 > dp[i]) {
-          dp[i] = dp[j] + 1;
+      if (nums[i] > nums[j] && incrSeq[j] + 1 > incrSeq[i]) {
+          incrSeq[i] = incrSeq[j] + 1;
       }
     }
   }
-  dp.sort();
-  return dp[nums.length-1];
+  incrSeq.sort();
+  return incrSeq[nums.length-1];
   }
 }
