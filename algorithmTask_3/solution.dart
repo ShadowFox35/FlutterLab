@@ -1,18 +1,16 @@
 class Solution {
   bool canFinish(int numCourses, List<List<int>> prerequisites) {
-    List<List<int>> adjacencyList = List.generate(numCourses, (index) => []);
-    List<int> incomingEdges = List.filled(numCourses, 0);
+    List<List<int>> adjList = List.generate(numCourses, (index) => []);
+    List<int> incEdges = List.filled(numCourses, 0);
 
     for (List<int> elem in prerequisites) {
-      int course = elem[0];
-      int neededCourse = elem[1];
-      adjacencyList[neededCourse].add(course);
-      incomingEdges[course]++;
+      adjList[elem[1]].add(elem[0]);
+      incEdges[elem[0]]++;
     }
 
     List<int> queue = [];
     for (int i = 0; i < numCourses; i++) {
-      if (incomingEdges[i] == 0) {
+      if (incEdges[i] == 0) {
         queue.add(i);
       }
     }
@@ -20,12 +18,12 @@ class Solution {
     int finishedCourses = 0;
 
     while (queue.isNotEmpty) {
-      int currentCourse = queue.removeAt(0);
+      int curCourse = queue.removeAt(0);
       finishedCourses++;
 
-      for (int nextCourse in adjacencyList[currentCourse]) {
-        incomingEdges[nextCourse]--;
-        if (incomingEdges[nextCourse] == 0) {
+      for (int nextCourse in adjList[curCourse]) {
+        incEdges[nextCourse]--;
+        if (incEdges[nextCourse] == 0) {
           queue.add(nextCourse);
         }
       }
@@ -35,9 +33,13 @@ class Solution {
   }
 }
 
-// void main() {
+// tests:
+// 
+//void main() {
 //   int numCourses = 2;
-//   List<List<int>> prerequisites = [[1, 0]];
+//   List<List<int>> prerequisites = [
+//     [1, 0]
+//   ];
 
 //   bool result = canFinish(numCourses, prerequisites);
 //   print(result); // Output: true
@@ -47,4 +49,16 @@ class Solution {
 
 //   result = canFinish(numCourses, prerequisites);
 //   print(result); // Output: false
+
+//   int numCourses = 4;
+//   List<List<int>> prerequisites = [
+//     [1, 0],
+//     [1, 2],
+//     [3, 2],
+//     [1, 3],
+//     [2, 0]
+//   ];
+
+//   bool result = canFinish(numCourses, prerequisites);
+//   print(result); // Output: true
 // }
