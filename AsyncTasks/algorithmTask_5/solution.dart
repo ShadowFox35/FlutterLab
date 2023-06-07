@@ -1,7 +1,7 @@
 import 'dart:isolate';
 
 Future<int> processElement(int value) async {
-  await Future.delayed(Duration(seconds: 2));
+  await Future.delayed(Duration(seconds: 1));
   return value * 2;
 }
 
